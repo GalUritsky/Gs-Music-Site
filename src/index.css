@@ -20,19 +20,51 @@ a {
 }
 a:hover {
   color: #438092;
-  size : 1.1em;
+  transform: scale(1.05);
+  transition: all 0.2s ease;
 }
 
 header {
-  margin: 32px auto 0 auto;
-  padding: 0 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 960px;
+  padding: 16px;
+  background-color: #FFF0DD;
   border-bottom: 2px solid rgba(122, 88, 63, 0.5);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 50;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
+
 
 header nav {
   display: flex;
   gap: 2rem;
+}
+
+header nav a {
+  position: relative;
+}
+
+header nav a::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: #438092;
+  transition: width 0.3s ease;
+}
+
+header nav a:hover::after {
+  width: 100%;
 }
 
 body {

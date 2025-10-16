@@ -7,7 +7,7 @@ export default function Header() {
       <nav className="space-x-6">
         <a href="/Gs-Music-Site/" className="hover:text-gray-400">Home</a>
         <a href="/Gs-Music-Site/#/releases" className="hover:text-gray-400">Releases</a>
-        <a href="/Gs-Music-Site/#/credits" className="hover:text-gray-400">Credits</a>
+        <a href="/Gs-Music-Site/#/catalouge" className="hover:text-gray-400">Catalouge</a>
       </nav>
     </header>
   )
