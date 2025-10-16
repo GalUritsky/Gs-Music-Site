@@ -127,7 +127,7 @@ header nav a:hover::after {
   transition: max-height 0.3s ease, padding 0.3s ease;
   overflow: hidden;
   max-height: 0;
-  margin-top: 8px;
+  margin-top: 20px;
 }
 
 /* When open */
