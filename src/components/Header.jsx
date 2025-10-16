@@ -11,7 +11,7 @@ export default function Header() {
     <header className="site-header" role="banner">
       <div className="nav-container">
         {/* Logo */}
-        <h1 className="logo">G's Music</h1>
+        <h1 className="logo">G's' Music</h1>
 
         {/* Desktop nav */}
         <nav className="nav-desktop">
