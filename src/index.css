@@ -203,3 +203,126 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* ------------------------------
+    Releases Page Styles
+   ------------------------------ */
+.releases-page {
+  padding: 2rem 1rem;
+  max-width: 960px;
+  margin: 0 auto;
+  color: #3c2b1f;
+}
+
+.releases-title {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #7a593f;
+}
+
+.album-card {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(122, 88, 63, 0.2);
+  border-radius: 12px;
+  background-color: #fff8f0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.album-info {
+  flex: 1 1 250px;
+  min-width: 250px;
+}
+
+.album-cover {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.album-name {
+  font-size: 1.5rem;
+  margin-bottom: 0.3rem;
+  color: #5a3d28;
+}
+
+.album-artist {
+  font-weight: bold;
+  color: #86b0bd;
+  margin-bottom: 0.5rem;
+}
+
+.album-description {
+  font-size: 0.95rem;
+  color: #5a3d28;
+  line-height: 1.4;
+}
+
+.album-songs {
+  flex: 2 1 400px;
+  min-width: 300px;
+}
+
+.song-item {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0.75rem 0;
+}
+
+.song-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.song-title {
+  font-weight: 500;
+  color: #3c2b1f;
+}
+
+.song-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  color: #7a593f;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.icon-button:hover {
+  transform: scale(1.2);
+  color: #438092;
+}
+
+.song-description {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #5a3d28;
+  line-height: 1.4;
+}
+
+/* Make it look nice on phones */
+@media (max-width: 768px) {
+  .album-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .song-main {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .song-actions {
+    align-self: flex-end;
+  }
+}
