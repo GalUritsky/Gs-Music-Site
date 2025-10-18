@@ -238,9 +238,11 @@ button:focus-visible {
 }
 
 .album-cover {
-  width: 100%;
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
   border-radius: 8px;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .album-name {
