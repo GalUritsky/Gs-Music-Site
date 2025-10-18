@@ -242,7 +242,7 @@ button:focus-visible {
   height: 220px;
   object-fit: cover;
   border-radius: 8px;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
 }
 
 .album-name {
