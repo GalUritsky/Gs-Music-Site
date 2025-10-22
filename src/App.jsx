@@ -5,8 +5,12 @@ import Home from './pages/Home'
 import Releases from './pages/Releases'
 import Catalouge from './pages/Catalouge'
 import './App.css'
+import { PlayerProvider, usePlayer } from "./context/PlayerContext";
+import MusicPlayer from "./components/MusicPlayer";
 
-function App() {
+function AppContent() {
+  const { currentSong } = usePlayer();
+
   return (
     <Router>
       <Header />
@@ -17,7 +21,16 @@ function App() {
           <Route path="/catalouge" element={<Catalouge />} />
         </Routes>
       </main>
+      {currentSong && <MusicPlayer song={currentSong} />}
     </Router>
+  );
+}
+
+function App() {
+  return (
+    <PlayerProvider>
+      <AppContent />
+    </PlayerProvider>
   )
 }
 

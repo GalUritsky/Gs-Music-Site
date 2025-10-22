@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { FaPlay, FaDownload, FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { supabase } from "../lib/supabaseClient"; // Make sure this path is correct
 import "../index.css";
+import { usePlayer } from "../context/PlayerContext";
 
 function formatDuration(seconds) {
   const minutes = Math.floor(seconds / 60);
@@ -46,6 +47,10 @@ export default function Releases() {
 }
 
 function AlbumCard({ album }) {
+    const sortedSongs = [...(album.songs || [])].sort(
+    (a, b) => a.track_number - b.track_number
+  );
+
   return (
     <section className="album-card">
       <div className="album-info">
@@ -60,7 +65,7 @@ function AlbumCard({ album }) {
       </div>
 
       <div className="album-songs">
-        {album.songs?.map((song) => (
+        {sortedSongs.map((song) => (
           <SongItem key={song.id} song={song} />
         ))}
       </div>
@@ -70,6 +75,7 @@ function AlbumCard({ album }) {
 
 function SongItem({ song }) {
   const [expanded, setExpanded] = useState(false);
+  const { setCurrentSong } = usePlayer();
 
   return (
     <div className="song-item">
@@ -78,7 +84,7 @@ function SongItem({ song }) {
           {song.track_number}. {song.song_name} ({formatDuration(song.duration)})
         </span>
         <div className="song-actions">
-          <button className="icon-button">
+          <button className="icon-button" onClick={() => setCurrentSong(song)}>
             <FaPlay />
           </button>
           <button className="icon-button">
