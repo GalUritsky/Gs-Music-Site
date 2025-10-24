@@ -47,7 +47,7 @@ export default function Releases() {
 }
 
 function AlbumCard({ album }) {
-    const sortedSongs = [...(album.songs || [])].sort(
+  const sortedSongs = [...(album.songs || [])].sort(
     (a, b) => a.track_number - b.track_number
   );
 
@@ -65,17 +65,22 @@ function AlbumCard({ album }) {
       </div>
 
       <div className="album-songs">
-        {sortedSongs.map((song) => (
-          <SongItem key={song.id} song={song} />
+        {sortedSongs.map((song, index) => (
+          <SongItem
+            key={song.id}
+            song={song}
+            index={index}
+            songs={sortedSongs}
+          />
         ))}
       </div>
     </section>
   );
 }
 
-function SongItem({ song }) {
+function SongItem({ song, index, songs }) {
   const [expanded, setExpanded] = useState(false);
-  const { setCurrentSong } = usePlayer();
+  const { playFrom } = usePlayer();
 
   return (
     <div className="song-item">
@@ -84,7 +89,7 @@ function SongItem({ song }) {
           {song.track_number}. {song.song_name} ({formatDuration(song.duration)})
         </span>
         <div className="song-actions">
-          <button className="icon-button" onClick={() => setCurrentSong(song)}>
+          <button className="icon-button" onClick={() => playFrom(songs, index)}>
             <FaPlay />
           </button>
           <button className="icon-button">

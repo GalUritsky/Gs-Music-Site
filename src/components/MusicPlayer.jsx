@@ -1,8 +1,12 @@
 import { useState, useRef, useEffect } from "react";
 import { FaPlay, FaPause } from "react-icons/fa";
 import { supabase } from "../lib/supabaseClient";
+import { usePlayer } from "../context/PlayerContext";
 
-export default function MusicPlayer({ song }) {
+export default function MusicPlayer(/* props ignored - using context */) {
+  const { playlist, currentIndex, setCurrentIndex } = usePlayer();
+  const song = playlist?.[currentIndex] ?? null;
+
   const [isPlaying, setIsPlaying] = useState(false);
   const [audioUrl, setAudioUrl] = useState(null);
   const [currentTime, setCurrentTime] = useState(0);
@@ -12,26 +16,55 @@ export default function MusicPlayer({ song }) {
 
   // Fetch signed URL from Supabase when song changes
   useEffect(() => {
-    if (!song || !song.file_url) return;
+    if (!song || !song.file_url) {
+      setAudioUrl(null);
+      return;
+    }
+
+    let cancelled = false;
 
     const getSignedUrl = async () => {
       const { data, error } = await supabase.storage
         .from("songs") // your bucket name in Supabase Storage
         .createSignedUrl(song.file_url, 60 * 60); // 1-hour validity
 
-        if (error) {
-           console.error("Error fetching signed URL:", error);
-        } else {
-            console.log("Signed URL:", data.signedUrl);
-        }
+      if (error) {
+        console.error("Error fetching signed URL:", error);
+        return;
+      }
 
-
-      if (error) console.error("Error fetching signed URL:", error);
-      else setAudioUrl(data.signedUrl);
+      if (!cancelled) setAudioUrl(data.signedUrl);
     };
 
     getSignedUrl();
+
+    return () => {
+      cancelled = true;
+    };
   }, [song]);
+
+  // auto-play when audioUrl is ready
+  useEffect(() => {
+    if (!audioRef.current) return;
+    if (!audioUrl) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+      return;
+    }
+
+    audioRef.current.src = audioUrl;
+    audioRef.current.currentTime = 0;
+    const tryPlay = async () => {
+      try {
+        await audioRef.current.play();
+        setIsPlaying(true);
+      } catch (err) {
+        // autoplay may be blocked by browser; keep isPlaying false
+        setIsPlaying(false);
+      }
+    };
+    tryPlay();
+  }, [audioUrl]);
 
   // Update current time as the song plays
   const handleTimeUpdate = () => {
@@ -64,6 +97,15 @@ export default function MusicPlayer({ song }) {
     return `${minutes}:${seconds}`;
   };
 
+  const handleEnded = async () => {
+    if (currentIndex < playlist.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+      // next track will auto-play via audioUrl effect
+    } else {
+      setIsPlaying(false);
+    }
+  };
+
   return (
     <div className="music-player">
       <audio
@@ -71,7 +113,7 @@ export default function MusicPlayer({ song }) {
         src={audioUrl || ""}
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
-        onEnded={() => setIsPlaying(false)}
+        onEnded={handleEnded}
       />
       <div className="player-info">
         <h4>{song ? song.song_name : "No song selected"}</h4>
