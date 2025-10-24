@@ -470,3 +470,53 @@ button:focus-visible {
     height: 4px;
   }
 }
+
+/* ------------------------------
+   About Section Styles
+   ------------------------------ */
+/* About section compact, centered and subtle */
+.about-section {
+  max-width: 720px;
+  margin: 1.25rem auto;
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  align-items: center;
+  text-align: center;
+
+  /* border around both title and image */
+  border: 1px solid rgba(90, 61, 40, 0.12); /* subtle brown */
+  border-radius: 10px;
+  background: rgba(220, 217, 222, 0.5); /* slightly muted backdrop */
+  box-shadow: 0 6px 18px rgba(0,0,0,0.03);
+}
+
+.about-title {
+  margin: 0;
+  font-size: 1.15rem;
+  color: #5a3d28;
+  font-weight: 600;
+}
+
+.about-image {
+  width: 100%;
+  max-width: 480px; /* keeps image compact on wide screens */
+  height: auto;
+  border-radius: 8px;
+  box-shadow: none; /* keep it subtle */
+  opacity: 0.95; /* slightly muted */
+  display: block;
+}
+
+/* smaller devices */
+@media (max-width: 480px) {
+  .about-section {
+    max-width: 92%;
+    padding: 0.6rem;
+  }
+  .about-image {
+    max-width: 360px;
+  }
+}
+
