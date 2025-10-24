@@ -520,3 +520,140 @@ button:focus-visible {
   }
 }
 
+/* ------------------------------
+   Latest Releases Section Styles
+   ------------------------------ */
+/* Latest Releases — similar container to about-section but tuned for embeds */
+.latest-releases-section {
+  max-width: 720px;
+  margin: 1.25rem auto;
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  align-items: center;
+  text-align: center;
+
+  border: 1px solid rgba(90, 61, 40, 0.08);
+  border-radius: 10px;
+  background: rgba(220, 217, 222, 0.5);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.03);
+}
+
+.latest-releases-title {
+  margin: 0;
+  font-size: 1.05rem;
+  color: #5a3d28;
+  font-weight: 600;
+}
+
+/* small descriptive text inside the section */
+.latest-releases-section p {
+  margin: 0;
+  color: #444;
+  font-size: 0.95rem;
+}
+
+/* constrain and style the embedded player so it feels compact and muted */
+.latest-releases-section iframe {
+  width: 100%;
+  max-width: 480px; /* keep embed compact on wide screens */
+  height: 152px; /* keeps same aspect you used */
+  border: none; /* remove iframe border */
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  overflow: hidden;
+}
+
+/* tighter spacing on small screens */
+@media (max-width: 480px) {
+  .latest-releases-section {
+    max-width: 92%;
+    padding: 0.6rem;
+  }
+  .latest-releases-section iframe {
+    max-width: 360px;
+  }
+}
+
+/* ------------------------------
+   Contact Section Styles
+   ------------------------------ */
+.contact-section {
+  max-width: 720px;
+  margin: 1.5rem auto;
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  text-align: center;
+
+  border: 1px solid rgba(90, 61, 40, 0.08);
+  border-radius: 12px;
+  background: rgba(220, 217, 222, 0.5);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+}
+
+.contact-title {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #5a3d28;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.social-bar {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0.25rem;
+}
+
+/* larger, touch-friendly buttons */
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  background: rgba(90, 61, 40, 0.06);
+  color: #2b2b2b;
+  text-decoration: none;
+  transition: transform 0.14s ease, background 0.14s ease, box-shadow 0.14s ease;
+}
+
+/* hover / focus affordance */
+.social-link:hover,
+.social-link:focus {
+  transform: translateY(-4px);
+  background: rgba(90, 61, 40, 0.10);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+  outline: none;
+}
+
+/* icon size */
+.social-icon {
+  width: 24px;
+  height: 24px;
+}
+
+/* responsive adjustments */
+@media (max-width: 480px) {
+  .contact-section {
+    max-width: 92%;
+    padding: 0.75rem;
+  }
+  .social-link {
+    width: 48px;
+    height: 48px;
+  }
+  .social-icon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
