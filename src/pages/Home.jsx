@@ -88,6 +88,7 @@ export default function Home() {
             <FaEnvelope className="social-icon" />
           </a>
         </nav>
+        <h3>Caution: The release "Mood" on apple music isn't mine at all.. I'm working on putting it down.</h3>
       </section>
     </div>
   );
