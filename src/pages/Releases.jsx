@@ -82,6 +82,67 @@ function SongItem({ song, index, songs }) {
   const [expanded, setExpanded] = useState(false);
   const { playFrom } = usePlayer();
 
+  const handleDownload = async (song) => {
+    try {
+      const pw = window.prompt("Enter download password:");
+      if (pw === null) return; // user cancelled
+
+      // fetch stored password for this song (note: exposes password to client)
+      const { data: pwRow, error: pwError } = await supabase
+        .from("songs")
+        .select("download_password")
+        .eq("id", song.id)
+        .single();
+
+      if (pwError) {
+        console.error(pwError);
+        alert("Unable to verify password.");
+        return;
+      }
+
+      if (pwRow?.download_password !== pw) {
+        alert("Wrong password.");
+        return;
+      }
+
+      // create signed url and download
+      const { data: urlData, error: urlError } = await supabase.storage
+        .from("songs")
+        .createSignedUrl(song.file_url, 60); // 60s validity
+
+      if (urlError || !urlData?.signedUrl) {
+        console.error(urlError);
+        alert("Failed to generate download link.");
+        return;
+      }
+
+      // fetch the file and trigger download (safer cross-origin)
+      const res = await fetch(urlData.signedUrl);
+      if (!res.ok) {
+        alert("Failed to fetch file.");
+        return;
+      }
+      const blob = await res.blob();
+      const objectUrl = URL.createObjectURL(blob);
+
+      // determine extension/name
+      const parts = (song.file_url || "file.mp3").split(".");
+      const ext = parts.length > 1 ? parts.pop() : "mp3";
+      const filename = `${(song.song_name || "track").replace(/[\/\\:?<>|*"']/g, "")}.${ext}`;
+
+      const a = document.createElement("a");
+      a.href = objectUrl;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(objectUrl);
+    } catch (err) {
+      console.error(err);
+      alert("Download failed.");
+    }
+  };
+
   return (
     <div className="song-item">
       <div className="song-main">
@@ -92,7 +153,7 @@ function SongItem({ song, index, songs }) {
           <button className="icon-button" onClick={() => playFrom(songs, index)}>
             <FaPlay />
           </button>
-          <button className="icon-button">
+          <button className="icon-button" onClick={() => handleDownload(song)}>
             <FaDownload />
           </button>
           <button
